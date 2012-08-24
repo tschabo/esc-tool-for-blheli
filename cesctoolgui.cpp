@@ -18,7 +18,12 @@ CEscToolGui::CEscToolGui(QWidget *parent) :
 
   foreach(QextPortInfo port, QextSerialEnumerator::getPorts())
   {
+#if defined(Q_OS_WIN)
+    ui->c_pCbPort->insertItem(0, port.portName);
+#endif
+#if defined(Q_OS_UNIX)
     ui->c_pCbPort->insertItem(0, port.physName);
+#endif
   }
   ui->c_pCbPort->setCurrentIndex(0);
 
