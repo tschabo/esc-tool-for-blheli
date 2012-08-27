@@ -102,12 +102,7 @@ bool CAbstractSerialComm::openProgrammer()
     signal_dumpString(tr("*** opening the serial connection failed"));
     return false;
   }
-  if(!serialRead())
-  {
-    signal_dumpString(tr("*** opening the serial connection failed"));
-    close();
-    return false;
-  }
+  sleep(2);
   return true;
 }
 
@@ -278,6 +273,17 @@ bool CAbstractSerialComm::intToStringHexByte(int iInt, QString &qsByte)
 bool CAbstractSerialComm::initProgrammer()
 {
   QString qsTmp;
+  if(this->write("v") == -1)
+  {
+    signal_dumpString(tr("*** init programmer failed (at write(\"r\")\n"));
+    return false;
+  }
+  if(!serialRead(qsTmp))
+  {
+    signal_dumpString(tr("*** init programmer failed (at r serialRead())\n"));
+    return false;
+  }
+  this->flush();
   if(this->write("r") == -1)
   {
     signal_dumpString(tr("*** init programmer failed (at write(\"r\")\n"));

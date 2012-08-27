@@ -54,6 +54,7 @@ void CEscToolGui::slot_readConfig()
   c_pConfig->setPortName(ui->c_pCbPort->currentText());
   c_pConfig->readConfig(&c_configList);
   c_pConfModel->initSetData(&c_configList);
+  ui->c_pConfigTable->resizeColumnsToContents();
 }
 
 void CEscToolGui::slot_writeConfig()
