@@ -1,0 +1,13 @@
+=Building the EscTool=
+
+==On Ubuntu Linux==
+ # Install build-essential
+  * {{{sudo apt-get install build-essential}}}
+ # Install Qt
+  * {{{sudo apt-get install libqt4-dev}}}
+ # Optionally install qt-creator for developing on this project.
+  * {{{sudo apt-get install qt-creator}}}
+ # Download the Code and open a console. Switch to the code-directory
+  * {{{qmake && make}}}
+ # you can execute the EscTool by typing:
+  * ./EscTool
