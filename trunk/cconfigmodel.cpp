@@ -53,10 +53,9 @@ QVariant CConfigModel::data(const QModelIndex &index, int role) const
               return QString("decode error: ").append(c_pData->at(index.row())->qsReadData);
             }
             QString qsOut;
-            if((iTmp <= c_pData->at(index.row())->qslChoices.count()) &&
-               (iTmp > 0))
+            if((iTmp <= c_pData->at(index.row())->qslChoices.count()))
             {
-              return qsOut + QString::number(iTmp) + " : " + c_pData->at(index.row())->qslChoices.at(iTmp-1);
+              return qsOut + QString::number(iTmp) + " : " + c_pData->at(index.row())->qslChoices.at(iTmp-c_pData->at(index.row())->iMinVal);
             }
             return iTmp;
           }
@@ -87,6 +86,9 @@ QVariant CConfigModel::data(const QModelIndex &index, int role) const
 
     case CConfigModel::eRawValueRole:
       return c_pData->at(index.row())->qsReadData;
+
+    case CConfigModel::eMinValRole:
+      return c_pData->at(index.row())->iMinVal;
 
     default:
       return QVariant();

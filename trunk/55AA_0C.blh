@@ -1,0 +1,12 @@
+Gain;1A07;1;3;0.75|0.88|1.0|1.12|1.25;0;1
+Low Voltage Limit;1A06;1;3;3.0 V/cell|3.1 V/cell|3.2 V/cell|3.3 V/cell|3.4 V/cell;0;1
+Startup Power;1A09;1;1;0.50|0.75|1.00|1.25|1.50;0;1
+Startup RPM;1A12;1;1;0.67|0.8|1.00|1.25|1.5;0;1
+Startup Acceleration;1A13;1;5;0.4|0.7|1.0|1.5|2.3;0;1
+Motor Timing;1A15;1;3;low|medium low|medium|medium high|high;0;1
+Damping Force;1A16;1;2;very low|low|medium low|medium high|high;0;1
+Motor PWM Frequency;1A0A;1;1;high|low|damped light|~damped;0;1
+Motor Direction;1A0B;1;1;normal|reversed;0;1
+Voltage Compensation;1A14;1;1;off|on;0;1
+Input PWM Polarity;1A0C;1;1;positive|negative;0;1
+Programming by Tx;1A0F;1;1;off|on;0;0

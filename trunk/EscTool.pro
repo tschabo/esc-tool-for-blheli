@@ -32,3 +32,9 @@ HEADERS  += \
 
 FORMS    += \
     cesctoolgui.ui
+
+OTHER_FILES += \
+    55AA_0C.blh \
+    common_0C.blh \
+    A55A_0C.blh \
+    5AA5_0C.blh

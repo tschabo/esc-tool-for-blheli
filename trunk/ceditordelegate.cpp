@@ -26,10 +26,11 @@ QWidget *CEditorDelegate::createEditor(QWidget *parent, const QStyleOptionViewIt
   QStringList qslOptions = index.data(CConfigModel::eOptionsRole).toStringList();
 
   int iVal = index.data(CConfigModel::eRawValueRole).toString().toInt(0, 16);
+  int iMinVal = index.data(CConfigModel::eMinValRole).toInt();
 
   for(int i = 0; i < qslOptions.count(); i++)
   {
-    pEditor->addItem(QString::number(i+1) + " : " + qslOptions.at(i));
+    pEditor->addItem(QString::number(i + iMinVal) + " : " + qslOptions.at(i));
   }
 
   pEditor->setCurrentIndex(iVal);
@@ -46,8 +47,9 @@ void CEditorDelegate::setEditorData(QWidget *editor, const QModelIndex &index) c
   }
   else
   {
+    int iMinVal = index.data(CConfigModel::eMinValRole).toInt();
     QComboBox * pEditor = static_cast<QComboBox*>(editor);
-    int iVal = index.data(CConfigModel::eRawValueRole).toString().toInt(0, 16) - 1;
+    int iVal = index.data(CConfigModel::eRawValueRole).toString().toInt(0, 16) - iMinVal;
     pEditor->setCurrentIndex(iVal);
   }
 }
@@ -70,7 +72,8 @@ void CEditorDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, c
   }
   else
   {
+    int iMinVal = index.data(CConfigModel::eMinValRole).toInt();
     QComboBox * pEditor = static_cast<QComboBox*>(editor);
-    model->setData(index, pEditor->currentIndex()+1);
+    model->setData(index, pEditor->currentIndex()+iMinVal);
   }
 }
