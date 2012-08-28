@@ -1,6 +1,6 @@
 #include "cescconf.h"
 
-#include<QFile>
+#include <QFile>
 #include "ccsvparser.h"
 
 CEscConf::CEscConf(QObject *parent) :
@@ -26,8 +26,8 @@ bool CEscConf::readConfig(QList<sEEpromData *> *pData)
   {
     goto cleanup;
   }
-  // 1A02 - Adress of the Revision of the eeprom layout
-  if(!serialReadBlock("01", "1A02", qsResponse))
+  // 1A00 - Adress of the Revision of the eeprom layout
+  if(!serialReadBlock("02", "1A00", qsResponse))
   {
     goto cleanup;
   }
@@ -35,9 +35,9 @@ bool CEscConf::readConfig(QList<sEEpromData *> *pData)
   {
     sEEpromData * pTmp = new sEEpromData;
     pTmp->bReadOnly = true;
-    pTmp->iSize = 1;
-    pTmp->qsAdress = "1A02";
-    pTmp->qsName = "EEprom Layout Revision";
+    pTmp->iSize = 2;
+    pTmp->qsAdress = "1A00";
+    pTmp->qsName = "Revision";
     pTmp->qsReadData  = qsResponse;
     pTmp->iMinVal=0;
     pData->prepend(pTmp);
