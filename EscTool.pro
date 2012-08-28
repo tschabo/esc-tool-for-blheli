@@ -34,7 +34,7 @@ FORMS    += \
     cesctoolgui.ui
 
 OTHER_FILES += \
-    55AA_0C.blh \
-    common_0C.blh \
-    A55A_0C.blh \
-    5AA5_0C.blh
+    55AA_0601.blh \
+    5AA5_0601.blh \
+    A55A_0601.blh \
+    common_0601.blh
