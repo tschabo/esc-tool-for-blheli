@@ -32,7 +32,8 @@ public:
   {
     eEditableRole = Qt::UserRole + 1,
     eOptionsRole = Qt::UserRole + 2,
-    eRawValueRole = Qt::UserRole + 3
+    eRawValueRole = Qt::UserRole + 3,
+    eMinValRole = Qt::UserRole + 4
   };
 
 signals:

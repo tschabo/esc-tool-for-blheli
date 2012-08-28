@@ -12,7 +12,8 @@ enum eEEpromDataDataType
   eSize = 2,
   eDefaultValue = 3,
   eChoices = 4,
-  eReadonly = 5
+  eReadonly = 5,
+  eMinVal = 6
 };
 
 struct sEEpromData
@@ -23,6 +24,7 @@ struct sEEpromData
   QString qsDefaultVal;
   QStringList qslChoices;
   bool bReadOnly;
+  int iMinVal;
 
   QString qsReadData;
 };

@@ -23,7 +23,7 @@ bool CCsvParser::parseDoc(QString &qsDoc, QList<sEEpromData *> *qlData)
   {
     pTmpEEpromData = new sEEpromData;
     qslTmpPart = qslDoc.at(i).split(";");
-    if(qslTmpPart.count() != 6)
+    if(qslTmpPart.count() != 7)
     {
       signal_dumpString(tr("*** csv parser: wrong format\n"));
       goto cleanup;
@@ -70,6 +70,14 @@ bool CCsvParser::parseDoc(QString &qsDoc, QList<sEEpromData *> *qlData)
           if(!bTmpOk)
           {
             signal_dumpString(tr("*** csv parser: readonly flag malformed\n"));
+            goto cleanup;
+          }
+          break;
+        case eMinVal:
+          pTmpEEpromData->iMinVal = qslTmpPart.at(j).toInt(&bTmpOk, 10);
+          if(!bTmpOk)
+          {
+            signal_dumpString(tr("*** csv parser: min value malformed\n"));
             goto cleanup;
           }
           break;
@@ -135,7 +143,7 @@ cleanup:
 void CCsvParser::extractChoices(QString qsChoices, QStringList &qslChoices)
 {
   // percental
-  if(qsChoices == "~")
+  if(qsChoices.startsWith("%"))
   {
     for(int i = 0; i < 256; i++)
     {

@@ -39,10 +39,11 @@ bool CEscConf::readConfig(QList<sEEpromData *> *pData)
     pTmp->qsAdress = "1A02";
     pTmp->qsName = "EEprom Layout Revision";
     pTmp->qsReadData  = qsResponse;
+    pTmp->iMinVal=0;
     pData->prepend(pTmp);
   }
 
-  if(!p.parseFile(QString("common") + "#" + qsResponse + ".blh", pData))
+  if(!p.parseFile(QString("common") + "_" + qsResponse + ".blh", pData))
   {
     goto cleanup;
   }
@@ -68,7 +69,7 @@ bool CEscConf::readConfig(QList<sEEpromData *> *pData)
 
   iEnd = pData->count();
 
-  if(!p.parseFile(pEEpromMode->qsReadData + "#" + qsResponse + ".blh", pData))
+  if(!p.parseFile(pEEpromMode->qsReadData + "_" + qsResponse + ".blh", pData))
   {
     goto cleanup;
   }
