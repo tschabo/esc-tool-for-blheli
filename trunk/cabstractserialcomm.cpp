@@ -1,6 +1,6 @@
 #include "cabstractserialcomm.h"
 
-#include <QTime>
+#include <QtCore/QTime>
 
 CAbstractSerialComm::CAbstractSerialComm(QObject *parent) :
   QextSerialPort(QextSerialPort::Polling, parent)
@@ -102,7 +102,11 @@ bool CAbstractSerialComm::openProgrammer()
     signal_dumpString(tr("*** opening the serial connection failed"));
     return false;
   }
-  sleep(2);
+
+  // Wait 2 seconds
+  QTime qtTmp = QTime::currentTime().addSecs(2);
+  while(QTime::currentTime() < qtTmp);
+
   return true;
 }
 
