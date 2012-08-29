@@ -35,11 +35,11 @@ class CCsvParser : public QObject
 public:
   explicit CCsvParser(QObject *parent = 0);
 
-  bool parseDoc(QString & qsDoc, QList<sEEpromData*> *qlData);
-  bool parseFile(QString qsFile, QList<sEEpromData *> *qlData);
+  bool parseDoc(QString & qsDoc, QList<sEEpromData*> *qlData, bool bDampedModeAvailable = false);
+  bool parseFile(QString qsFile, QList<sEEpromData *> *qlData, bool bDampedModeAvailable = false);
   
 private:
-  void extractChoices(QString qsChoices, QStringList & qslChoices);
+  void extractChoices(QString qsChoices, QStringList & qslChoices, bool bDampedModeAvailable);
 
 signals:
   void signal_dumpString(QString qsMessage);
