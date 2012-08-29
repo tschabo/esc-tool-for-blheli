@@ -3,6 +3,25 @@
 #include <QFile>
 #include "ccsvparser.h"
 
+QString hexStringToString(QString qsHexString)
+{
+  if(qsHexString.count() % 2 == 1)
+  {
+    return QString("decode error: ").append(qsHexString);
+  }
+  QString qsTmp;
+  bool bOk = true;
+  for(int i = 0; i < qsHexString.count(); i+=2)
+  {
+    qsTmp.append(qsHexString.mid(i, 2).toShort(&bOk, 16));
+    if(!bOk)
+    {
+      return QString("decode error: ").append(qsHexString);
+    }
+  }
+  return qsTmp;
+}
+
 CEscConf::CEscConf(QObject *parent) :
   CAbstractSerialComm(parent)
 {
@@ -17,6 +36,21 @@ bool CEscConf::readConfig(QList<sEEpromData *> *pData)
   QString qsResponse;
   sEEpromData * pEEpromMode = NULL;
   int iEnd = 0;
+  bool bDamped = false;
+  QString qsDampedEscs;
+  QStringList qslDampedEscs;
+
+  QFile fDamped("damped_esc.list");
+  if(!fDamped.exists())
+  {
+    goto cleanup;
+  }
+  if(!fDamped.open(QIODevice::ReadOnly))
+  {
+    goto cleanup;
+  }
+  qsDampedEscs = fDamped.readAll();
+  qslDampedEscs = qsDampedEscs.split("\n", QString::SkipEmptyParts);
 
   if(!openProgrammer())
   {
@@ -59,6 +93,17 @@ bool CEscConf::readConfig(QList<sEEpromData *> *pData)
     {
       pEEpromMode = pData->at(i);
     }
+    if(pData->at(i)->qsName == "BESC")
+    {
+      for(int j = 0; j < qslDampedEscs.count(); j++)
+      {
+        if(qslDampedEscs.at(j) == hexStringToString(pData->at(i)->qsReadData))
+        {
+          bDamped = true;
+          break;
+        }
+      }
+    }
   }
 
   if(pEEpromMode == NULL)
@@ -69,7 +114,7 @@ bool CEscConf::readConfig(QList<sEEpromData *> *pData)
 
   iEnd = pData->count();
 
-  if(!p.parseFile(pEEpromMode->qsReadData + "_" + qsResponse + ".blh", pData))
+  if(!p.parseFile(pEEpromMode->qsReadData + "_" + qsResponse + ".blh", pData, bDamped))
   {
     goto cleanup;
   }
@@ -81,6 +126,8 @@ bool CEscConf::readConfig(QList<sEEpromData *> *pData)
       goto cleanup;
     }
   }
+
+
 
   bRetVal = true;
 

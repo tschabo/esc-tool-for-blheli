@@ -1,13 +1,13 @@
 #include "ccsvparser.h"
 
-#include <Qt/qfile.h>
+#include <QtCore/QFile>
 
 CCsvParser::CCsvParser(QObject *parent) :
   QObject(parent)
 {
 }
 
-bool CCsvParser::parseDoc(QString &qsDoc, QList<sEEpromData *> *qlData)
+bool CCsvParser::parseDoc(QString &qsDoc, QList<sEEpromData *> *qlData, bool bDampedModeAvailable)
 {
   bool bRetVal = false;
 
@@ -48,7 +48,7 @@ bool CCsvParser::parseDoc(QString &qsDoc, QList<sEEpromData *> *qlData)
           }
           break;
         case eChoices:
-          extractChoices(qslTmpPart.at(j), pTmpEEpromData->qslChoices);
+          extractChoices(qslTmpPart.at(j), pTmpEEpromData->qslChoices, bDampedModeAvailable);
           break;
         case eAdress:
           if(qslTmpPart.at(j).length() != 4)
@@ -107,7 +107,7 @@ cleanup:
   return bRetVal;
 }
 
-bool CCsvParser::parseFile(QString qsFile, QList<sEEpromData *> * qlData)
+bool CCsvParser::parseFile(QString qsFile, QList<sEEpromData *> * qlData, bool bDampedModeAvailable)
 {
   bool bRetVal = false;
 
@@ -127,7 +127,7 @@ bool CCsvParser::parseFile(QString qsFile, QList<sEEpromData *> * qlData)
 
   qsRead = f.readAll();
 
-  if(!parseDoc(qsRead, qlData))
+  if(!parseDoc(qsRead, qlData, bDampedModeAvailable))
   {
     goto cleanup;
   }
@@ -140,7 +140,7 @@ cleanup:
 
 }
 
-void CCsvParser::extractChoices(QString qsChoices, QStringList &qslChoices)
+void CCsvParser::extractChoices(QString qsChoices, QStringList &qslChoices, bool bDampedModeAvailable = false)
 {
   // percental
   if(qsChoices.startsWith("%"))
@@ -153,4 +153,19 @@ void CCsvParser::extractChoices(QString qsChoices, QStringList &qslChoices)
   }
 
   qslChoices = qsChoices.split("|");
+
+  for(int i = qslChoices.count() - 1; i >= 0; i--)
+  {
+    if(qslChoices.at(i).startsWith('~'))
+    {
+      if(!bDampedModeAvailable)
+      {
+        qslChoices.removeAt(i);
+      }
+      else
+      {
+        qslChoices[i].remove('~');
+      }
+    }
+  }
 }

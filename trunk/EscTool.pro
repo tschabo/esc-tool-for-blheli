@@ -37,4 +37,5 @@ OTHER_FILES += \
     55AA_0601.blh \
     5AA5_0601.blh \
     A55A_0601.blh \
-    common_0601.blh
+    common_0601.blh \
+    damped_esc.list

@@ -9,4 +9,3 @@ Motor PWM Frequency;1A0A;1;1;high|low|damped light|~damped;0;1
 Motor Direction;1A0B;1;1;normal|reversed;0;1
 Voltage Compensation;1A14;1;1;off|on;0;1
 Input PWM Polarity;1A0C;1;1;positive|negative;0;1
-Programming by Tx;1A0F;1;1;off|on;0;0
