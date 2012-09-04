@@ -1,0 +1,5 @@
+EEprom Layout Revision;1A02;1;;;1;5
+Name;1A60;10;;;0;1
+MCU;1A50;10;;;1;1
+BESC;1A40;10;;;1;1
+Mode;1A0D;2;;;1;4
