@@ -8,7 +8,7 @@ include(external/qextserialport-1.2beta2/src/qextserialport.pri)
 
 QT       += core gui
 
-TARGET = esc
+TARGET = escdude
 TEMPLATE = app
 
 
