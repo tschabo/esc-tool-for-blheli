@@ -10,4 +10,4 @@
  # Download the Code and open a console. Switch to the code-directory
   * {{{qmake && make}}}
  # you can execute the EscTool by typing:
-  * ./EscTool
+  * ./escdude
