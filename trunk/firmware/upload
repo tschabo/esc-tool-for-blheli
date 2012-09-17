@@ -1,0 +1,3 @@
+#!/bin/bash
+
+avrdude -p m328p -c arduino -P /dev/ttyACM0 -b 115200 -D -Uflash:w:D2PROG.hex:i

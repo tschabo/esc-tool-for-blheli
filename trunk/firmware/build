@@ -1,0 +1,8 @@
+#!/bin/bash
+
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=16000000UL -MMD -MP -MF"d2prog.d" -MT"d2prog.d" -c -o "d2prog.o" "d2prog.c"
+avr-gcc -Wl,-Map,D2PROG.map -mmcu=atmega328p -o "D2PROG.elf"  d2prog.o
+avr-objdump -h -S D2PROG.elf  >"D2PROG.lss"
+avr-objcopy -R .eeprom -O ihex D2PROG.elf  "D2PROG.hex"
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex D2PROG.elf  "D2PROG.eep"
+
