@@ -102,6 +102,7 @@ bool CSerialCommunication::serialWriteBlock(QByteArray qbaLength, QByteArray qba
   if(qbaAdress.length() != 4)
   {
     signal_dumpString(tr("*** serialWriteBlock(...) adress is malformed"));
+    goto cleanup;
   }
 
   // bw means block write
@@ -429,7 +430,7 @@ bool CSerialCommunication::serialWriteBlock(mcu::SHexData &hexDataIntel)
 cleanup:
   if(!bRetVal)
   {
-    signal_dumpString(tr("*** serialWriteBlock(...) failed\n"));
+    signal_dumpString(tr("*** serialWriteBlock(...) failed"));
   }
   return bRetVal;
 }
