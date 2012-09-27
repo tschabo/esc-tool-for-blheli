@@ -117,7 +117,7 @@ public:
   /// \param [out] qsReadableValue the string representation of the value
   /// \returns true if the method was successful
   /// \returns true if the method was not successful
-  /// \remarks delimiter is '~' example for a choice: "01~3.0 V/cell"  - 01 is the hex value of the eeprom adress
+  /// \remarks delimiter is '~' example for a choice: "01~3.0 V/cell"  - 01 is the hex value of the eeprom Value
   static bool decodeChoice(QString qsChoice, QByteArray &qbaEEpromValue, QString &qsReadableValue)
   {
     QStringList qslTmp = qsChoice.split('~');

@@ -185,11 +185,13 @@ cleanup:
 void CEEpromDefinitonFileParser::extractChoices(QString qsChoices, QStringList &qslChoices, bool bDampedModeAvailable)
 {
   // percental
+  char tmpByte[3];
   if(qsChoices.startsWith("%"))
   {
     for(int i = 0; i < 256; i++)
     {
-      qslChoices.append(QString::number(((100.0 * (double) i) / 255.0)).append("%"));
+      sprintf(tmpByte, "%02X", i);
+      qslChoices.append(QString(tmpByte) + "~" + QString::number(((100.0 * (double) i) / 255.0)).append("%"));
     }
     return;
   }
