@@ -33,7 +33,5 @@ HEADERS  += escdude.h \
 FORMS    += escdude.ui
 
 OTHER_FILES += \
-    55AA_0601.blh \
-    common_0601.blh \
     damped_esc.list
 
