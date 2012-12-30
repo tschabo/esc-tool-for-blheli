@@ -1,0 +1,12 @@
+Tail Gain;1A07;01;03;01~0.75|02~0.88|03~1.00|04~1.12|05~1.25;0;0
+Tail Idle Speed;1A08;01;04;01~low|02~medium low|03~medium|04~medium high|05~high;0;0
+Startup Power;1A09;01;03;01~0.50|02~0.75|03~1.00|04~1.25|05~1.50;0;0
+Startup RPM;1A12;01;03;01~0.67|02~0.8|03~1.00|04~1.25|05~1.5;0;0
+Startup Acceleration;1A13;01;05;01~0.4|02~0.7|03~1.0|04~1.5|05~2.3;0;0
+Motor Timing;1A15;01;03;01~low|02~medium low|03~medium|04~medium high|05~high;0;0
+Damping Force;1A16;01;05;01~very low|02~low|03~medium low|04~medium high|05~high;0;0
+Motor PWM Frequency;1A0A;01;04;01~high|02~low|03~damped light|04~damped;0;0
+Motor Direction;1A0B;01;01;01~normal|02~reversed;0;0
+Voltage Compensation;1A14;01;01;01~off|02~on;0;0
+Input PWM Polarity;1A0C;01;01;01~positive|02~negative;0;0
+Programming by Tx;1A0F;01;01;00~off|01~on;0;0

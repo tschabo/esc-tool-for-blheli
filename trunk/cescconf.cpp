@@ -28,6 +28,7 @@
 
 #include "ceepromdefinitonfileparser.h"
 #include <QtCore/QFile>
+#include <QString>
 
 CEscConf::CEscConf(QObject *parent) :
   CSerialCommunication(parent)
@@ -41,12 +42,12 @@ bool CEscConf::readConfig(QList<esc::SEEpromData *> *pData)
   CEEpromDefinitonFileParser p;
   connect(&p, SIGNAL(signal_dumpString(QString)), this, SIGNAL(signal_dumpString(QString)));
   QByteArray qbaResponse;
-  esc::SEEpromData * pEEpromMode = NULL;
   int iEnd = 0;
   bool bDamped = false;
   QString qsDampedEscs;
   QStringList qslDampedEscs;
-  QByteArray qbaVersion;
+  QByteArray qbaMode;
+  QByteArray qbaEEpromLayout;
 
   QFile fDamped("damped_esc.list");
   if(!fDamped.exists())
@@ -68,8 +69,8 @@ bool CEscConf::readConfig(QList<esc::SEEpromData *> *pData)
   {
     goto cleanup;
   }
-  // 1A00 - Adress of the Version
-  if(!serialReadBlock("02", "1A00", qbaResponse))
+  // 1A02 - Adress of the EEpromLayout
+  if(!serialReadBlock("01", "1A02", qbaResponse))
   {
     goto cleanup;
   }
@@ -77,9 +78,9 @@ bool CEscConf::readConfig(QList<esc::SEEpromData *> *pData)
   {
     pTmp = new esc::SEEpromData;
     pTmp->bReadOnly = true;
-    pTmp->qbaSize = "02";
-    pTmp->qbaAdress = "1A00";
-    pTmp->qsName = "Revision";
+    pTmp->qbaSize = "01";
+    pTmp->qbaAdress = "1A02";
+    pTmp->qsName = "EEpromLayout";
     if(qbaResponse.split('k').length() != 2)
     {
       pTmp->qbaReadData  = qbaResponse;
@@ -87,14 +88,14 @@ bool CEscConf::readConfig(QList<esc::SEEpromData *> *pData)
     else
     {
       pTmp->qbaReadData = qbaResponse.split('k').at(1);
-      qbaVersion = pTmp->qbaReadData;
+      qbaEEpromLayout = QByteArray::number(pTmp->qbaReadData.toInt(NULL,16));
     }
-    pTmp->eDataType = esc::eVersionNumber;
+    pTmp->eDataType = esc::eRaw;
     pData->prepend(pTmp);
   }
 
 
-  if(!p.parseFile(QString("common") + "_" + qbaVersion + ".blh", pData))
+  if(!p.parseFile("headerBlh", pData))
   {
     goto cleanup;
   }
@@ -116,7 +117,22 @@ bool CEscConf::readConfig(QList<esc::SEEpromData *> *pData)
     // MODE
     if(pData->at(i)->qsName == "Mode")
     {
-      pEEpromMode = pData->at(i);
+        if(pData->at(i)->qbaReadData == "A55A")
+        {
+            qbaMode = "main";
+        }
+        else if(pData->at(i)->qbaReadData == "5AA5")
+        {
+            qbaMode = "tail";
+        }
+        else if(pData->at(i)->qbaReadData == "55AA")
+        {
+            qbaMode = "multi";
+        }
+        else
+        {
+            qbaMode = "error";
+        }
     }
     if(pData->at(i)->qsName == "BESC")
     {
@@ -131,15 +147,9 @@ bool CEscConf::readConfig(QList<esc::SEEpromData *> *pData)
     }
   }
 
-  if(pEEpromMode == NULL)
-  {
-    signal_dumpString(tr("*** Mode not found"));
-    goto cleanup;
-  }
-
   iEnd = pData->count();
 
-  if(!p.parseFile(pEEpromMode->qbaReadData + "_" + qbaVersion + ".blh", pData, bDamped))
+  if(!p.parseFile(QString("layout") + qbaEEpromLayout + qbaMode, pData, bDamped))
   {
     goto cleanup;
   }
