@@ -22,6 +22,5 @@ TODO
   * {{{sudo apt-get install avr-libc binutils-avr gcc-avr avrdude}}}
  # Download the Code and open a console. Switch to the code-subdirectory firmware
   * {{{./build}}}
-  * edit upload file ... replace /dev/ttyACM0 with the port which your Arduino uses
-  * replace the baud rate with the one which fits for your Arduino
+  * edit upload file ... replace /dev/ttyACM0 with the port which your Arduino uses and replace the baud rate with the one which fits for your Arduino
   * {{{./upload}}}
