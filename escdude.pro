@@ -4,9 +4,11 @@
 #
 #-------------------------------------------------
 
-include(external/qextserialport-1.2beta2/src/qextserialport.pri)
+include($$PWD/external/qextserialport-1.2beta2/src/qextserialport.pri)
 
 QT       += core gui
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = escdude
 TEMPLATE = app

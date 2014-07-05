@@ -190,7 +190,7 @@ bool CConfigModel::setData(const QModelIndex &index, const QVariant &value, int 
 //      return false;
 //  }
 
-//  c_pData->at(index.row())->qbaReadData  = qsValue.toAscii();
+//  c_pData->at(index.row())->qbaReadData  = qsValue.toLocal8Bit();
   c_pData->at(index.row())->qbaReadData = value.toByteArray();
   dataChanged(index, index);
   return true;
@@ -199,7 +199,14 @@ bool CConfigModel::setData(const QModelIndex &index, const QVariant &value, int 
 void CConfigModel::initSetData(QList<esc::SEEpromData *> *pData)
 {
   c_pData = pData;
+#if QT_VERSION >= 0x050000
+  // Qt5 code
+  beginResetModel();
+  endResetModel();
+#else
+  // Qt4 code
   reset();
+#endif
 }
 
 QVariant CConfigModel::decodeDisplayRoleData(esc::SEEpromData *pData) const

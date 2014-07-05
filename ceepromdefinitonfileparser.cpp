@@ -63,10 +63,10 @@ bool CEEpromDefinitonFileParser::parseDoc(QString &qsDoc, QList<esc::SEEpromData
           pTmpEEpromData->qsName = qslTmpPart.at(j);
           break;
         case eDefaultValue:
-          pTmpEEpromData->qbaDefaultValue = qslTmpPart.at(j).toAscii();
+          pTmpEEpromData->qbaDefaultValue = qslTmpPart.at(j).toLocal8Bit();
           break;
         case eSize:
-          pTmpEEpromData->qbaSize = qslTmpPart.at(j).toAscii();
+          pTmpEEpromData->qbaSize = qslTmpPart.at(j).toLocal8Bit();
           if(!bTmpOk)
           {
             signal_dumpString(tr("*** csv parser: size malformed"));
@@ -86,7 +86,7 @@ bool CEEpromDefinitonFileParser::parseDoc(QString &qsDoc, QList<esc::SEEpromData
             signal_dumpString(tr("*** csv parser: malformed adress"));
             goto cleanup;
           }
-          pTmpEEpromData->qbaAdress = qslTmpPart.at(j).toAscii();
+          pTmpEEpromData->qbaAdress = qslTmpPart.at(j).toLocal8Bit();
           break;
         case eReadonly:
           if(qslTmpPart.at(j).toInt(&bTmpOk, 10) == 1)
