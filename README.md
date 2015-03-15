@@ -28,3 +28,11 @@ TODO
    * ```./build```
    * edit upload file ... replace ```/dev/ttyACM0``` with the port which your Arduino uses and replace the baud rate with the one which fits for your Arduino
    * ```./upload```
+
+## Connections on Arduino
+
+D2 interface | atmega328p | arduino
+--- | --- | ---
+C2D | PORTB4 | 12
+C2CK | PORTB3 | 11
+
